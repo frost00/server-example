@@ -4,6 +4,7 @@ const app = express();
 const mysql = require('mysql');
 const bodyParser =require('body-Parser');
 const cors = require('cors');
+const ENV_PORT = process.env.PORT || 3001;
 require('dotenv').config();
 
 const db = mysql.createPool({
@@ -48,6 +49,6 @@ app.get('/api/message',(req,res)=>{
   res.send("hello!!! from server!!!")
 })
 
-app.listen(3001, ()=>{
-  console.log("PORT 3001");
+app.listen(ENV_PORT, ()=>{
+  console.log(`Listening on PORT ${ENV_PORT}`);
 });
