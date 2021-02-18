@@ -30,16 +30,23 @@ const passwordIN = req.body.password;
 
 });
 
-app.get('api/read',(req,res)=>{
+app.get('/api/read',(req,res)=>{
   const emailIN = req.body.email;
   //const passwordIN = req.body.password;
 
 //result is not defined ?
-  const sqlRead = "SELECT email, password FROM login WHERE email = "+emailIN+"";
+  const sqlRead = "SELECT email, password FROM login WHERE "+emailIN+" = email";
   db.query(sqlRead,(error,result)=>{
     console.log(error);
+    res.send(result);
+    //res.send(error);
   });
 });
+
+
+app.get('/api/message',(req,res)=>{
+  res.send("hello!!! from server!!!")
+})
 
 app.listen(3001, ()=>{
   console.log("PORT 3001");
