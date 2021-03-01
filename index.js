@@ -7,6 +7,7 @@ const cors = require('cors');
 const ENV_PORT = process.env.PORT || 3001;
 require('dotenv').config();
 
+
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
@@ -19,7 +20,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.post('/api/insert',(req,res)=>{
-
 const emailIN = req.body.email;
 const passwordIN = req.body.password;
 
@@ -33,14 +33,11 @@ const passwordIN = req.body.password;
 
 app.get('/api/read',(req,res)=>{
   const emailIN = req.body.email;
-  //const passwordIN = req.body.password;
 
-//result is not defined ?
-  const sqlRead = "SELECT email, password FROM login WHERE "+emailIN+" = email";
+  const sqlRead = "SELECT email, password FROM login WHERE email = '"+emailIN+"'";
   db.query(sqlRead,(error,result)=>{
-    console.log(error);
+    console.log(result);
     res.send(result);
-    //res.send(error);
   });
 });
 
@@ -48,6 +45,19 @@ app.get('/api/read',(req,res)=>{
 app.get('/api/message',(req,res)=>{
   res.send("hello!!! from server!!!")
 })
+
+
+app.get('/test',(req,res)=>{
+  async function getMedia(constraints){
+    let stream = null;
+  
+    try{
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+    }catch(err){console.log(err)};
+  }
+  
+});
+
 
 app.listen(ENV_PORT, ()=>{
   console.log(`Listening on PORT ${ENV_PORT}`);
